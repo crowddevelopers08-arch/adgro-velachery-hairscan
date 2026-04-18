@@ -114,10 +114,10 @@ export async function GET(request: NextRequest) {
     "Advanced skin analysis and personalised guidance",
     "Trusted by thousands across Tamil Nadu",
     "15+ years of experience with Indian skin concerns",
-    "Adgro Hair Ambattur, Ambattur, Thiruvallur",
-    "Address: Sai Health and Beauty Ventures, KAVITHA RAVIKUMAR, New No 122/124/1, New No 124/102, Redhills Main Road, Vijaylakshmipuram, NVA FTTH RSU, Ambattur, Thiruvallur, Tamil Nadu - 600053",
-    "Email: customercare@adgrohairambattur.in",
-    "Contact: +91 7409256789",
+    "Adgro Hair Velachery, Velachery, Chennai",
+    "Address: Second Floor Block No.20, Sankaran Avenue, Plot No.31, Pandian St, Indira Gandhi Nagar, Velachery, Chennai, Tamil Nadu 600042",
+    "Email: customercare@adgrohairvelachery.in",
+    "Contact: +91 8390856789",
   ])
 
   doc.moveDown(0.8)

@@ -145,7 +145,7 @@ export function ResultsView({ formData, capturedImage, onBack }: ResultsViewProp
             <ArrowLeft style={{ width: 15, height: 15 }} />
             Back to Home
           </button>
-          <img src="/adgrologo.png" alt="Adgro Hair Ambattur" style={{ height: 36, width: "auto", objectFit: "contain" }} />
+          <img src="/adgrologo.png" alt="Adgro Hair Velachery" style={{ height: 36, width: "auto", objectFit: "contain" }} />
         </div>
       </div>
 
@@ -261,7 +261,7 @@ export function ResultsView({ formData, capturedImage, onBack }: ResultsViewProp
             <p style={{ fontSize: "0.85rem", color: "#6b6b6b" }}>Get expert advice for your hair condition. Book a free consultation now.</p>
           </div>
           <a
-            href="tel:+917409256789"
+            href="tel:+918390856789"
             style={{
               display: "flex", alignItems: "center", gap: "8px",
               background: "linear-gradient(135deg, #ea2424, #c91f1f)",
@@ -276,12 +276,12 @@ export function ResultsView({ formData, capturedImage, onBack }: ResultsViewProp
             Book Consultation
           </a>
           <div style={{ flexBasis: "100%", color: "#6b6b6b", fontSize: "0.82rem", lineHeight: 1.6 }}>
-            <p style={{ fontWeight: 700, color: "#1a1a1a", marginBottom: "3px" }}>Adgro Hair Ambattur</p>
-            <p>Sai Health and Beauty Ventures, KAVITHA RAVIKUMAR, New No 122/124/1, New No 124/102, Redhills Main Road, Vijaylakshmipuram, NVA FTTH RSU, Ambattur, Thiruvallur, Tamil Nadu - 600053</p>
+            <p style={{ fontWeight: 700, color: "#1a1a1a", marginBottom: "3px" }}>Adgro Hair Velachery</p>
+            <p>Second Floor Block No.20, Sankaran Avenue, Plot No.31, Pandian St, Indira Gandhi Nagar, Velachery, Chennai, Tamil Nadu 600042</p>
             <p>
-              <a href="mailto:customercare@adgrohairambattur.in" style={{ color: RED, textDecoration: "none", fontWeight: 700 }}>customercare@adgrohairambattur.in</a>
+              <a href="mailto:customercare@adgrohairvelachery.in" style={{ color: RED, textDecoration: "none", fontWeight: 700 }}>customercare@adgrohairvelachery.in</a>
               {" | "}
-              <a href="tel:+917409256789" style={{ color: RED, textDecoration: "none", fontWeight: 700 }}>+91 7409256789</a>
+              <a href="tel:+918390856789" style={{ color: RED, textDecoration: "none", fontWeight: 700 }}>+91 8390856789</a>
             </p>
           </div>
         </div>

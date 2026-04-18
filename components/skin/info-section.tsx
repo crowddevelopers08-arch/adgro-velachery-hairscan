@@ -217,7 +217,7 @@ export function SkinInfoSection({ onStartScan: _onStartScan }: SkinInfoSectionPr
 
           <div className="info-cta-btns">
             <a
-              href="tel:+917409256789"
+              href="tel:+918390856789"
               className="info-cta-btn"
               style={{ display: "flex", alignItems: "center", gap: "10px", background: "transparent", color: "#ddb95a", border: "1px solid rgba(221,185,90,0.4)", borderRadius: "12px", padding: "14px 32px", fontSize: "1rem", fontWeight: 700, textDecoration: "none", backdropFilter: "blur(8px)", transition: "all 0.2s" }}
               onMouseEnter={(e) => {
@@ -230,14 +230,14 @@ export function SkinInfoSection({ onStartScan: _onStartScan }: SkinInfoSectionPr
               }}
             >
               <Phone style={{ width: 20, height: 20 }} />
-              +91 7409256789
+              +91 8390856789
             </a>
           </div>
           <div style={{ marginTop: "22px", color: "#8a8a8a", fontSize: "0.86rem", lineHeight: 1.7 }}>
-            <p style={{ fontWeight: 700, color: "#f2f0eb", marginBottom: "4px" }}>Adgro Hair Ambattur</p>
-            <p>Sai Health and Beauty Ventures, KAVITHA RAVIKUMAR, New No 122/124/1, New No 124/102, Redhills Main Road, Vijaylakshmipuram, NVA FTTH RSU, Ambattur, Thiruvallur, Tamil Nadu - 600053</p>
+            <p style={{ fontWeight: 700, color: "#f2f0eb", marginBottom: "4px" }}>Adgro Hair Velachery</p>
+            <p>Second Floor Block No.20, Sankaran Avenue, Plot No.31, Pandian St, Indira Gandhi Nagar, Velachery, Chennai, Tamil Nadu 600042</p>
             <p>
-              <a href="mailto:customercare@adgrohairambattur.in" style={{ color: "#ddb95a", textDecoration: "none", fontWeight: 700 }}>customercare@adgrohairambattur.in</a>
+              <a href="mailto:customercare@adgrohairvelachery.in" style={{ color: "#ddb95a", textDecoration: "none", fontWeight: 700 }}>customercare@adgrohairvelachery.in</a>
             </p>
           </div>
 

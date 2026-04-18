@@ -48,7 +48,7 @@ export default function ThankYouPage() {
           </div>
 
           {/* Logo */}
-          <img src="/adgrologo.png" alt="Adgro Hair Ambattur" style={{ height: 44, width: "auto", objectFit: "contain", margin: "0 auto 24px", display: "block" }} />
+          <img src="/adgrologo.png" alt="Adgro Hair Velachery" style={{ height: 44, width: "auto", objectFit: "contain", margin: "0 auto 24px", display: "block" }} />
 
           <h1 style={{ margin: "0 0 12px", fontSize: "clamp(1.8rem, 4vw, 2.4rem)", fontWeight: 900, color: "#1a1a1a", letterSpacing: "-0.025em" }}>
             Thank You!
@@ -65,7 +65,7 @@ export default function ThankYouPage() {
           </div>
 
           <a
-            href="tel:+917409256789"
+            href="tel:+918390856789"
             style={{
               display: "inline-flex", alignItems: "center", gap: "8px",
               background: "linear-gradient(135deg, #ea2424, #c91f1f)",
@@ -75,19 +75,19 @@ export default function ThankYouPage() {
               boxShadow: "0 8px 28px rgba(234,36,36,0.3)",
             }}
           >
-            Call Us: +91 7409256789
+            Call Us: +91 8390856789
           </a>
 
           <div style={{ marginTop: "22px", color: "#6b6b6b", fontSize: "0.82rem", lineHeight: 1.65 }}>
-            <p style={{ fontWeight: 700, color: "#1a1a1a", marginBottom: "4px" }}>Adgro Hair Ambattur</p>
-            <p>Sai Health and Beauty Ventures, KAVITHA RAVIKUMAR, New No 122/124/1, New No 124/102, Redhills Main Road, Vijaylakshmipuram, NVA FTTH RSU, Ambattur, Thiruvallur, Tamil Nadu - 600053</p>
+            <p style={{ fontWeight: 700, color: "#1a1a1a", marginBottom: "4px" }}>Adgro Hair Velachery</p>
+            <p>Second Floor Block No.20, Sankaran Avenue, Plot No.31, Pandian St, Indira Gandhi Nagar, Velachery, Chennai, Tamil Nadu 600042</p>
             <p>
-              <a href="mailto:customercare@adgrohairambattur.in" style={{ color: "#ea2424", textDecoration: "none", fontWeight: 700 }}>customercare@adgrohairambattur.in</a>
+              <a href="mailto:customercare@adgrohairvelachery.in" style={{ color: "#ea2424", textDecoration: "none", fontWeight: 700 }}>customercare@adgrohairvelachery.in</a>
             </p>
           </div>
 
           <p style={{ marginTop: "20px", fontSize: "0.8rem", color: "rgba(234,36,36,0.45)", fontStyle: "italic" }}>
-            Adgro Hair Ambattur — A call for a clear solution!
+            Adgro Hair Velachery — A call for a clear solution!
           </p>
         </div>
       </main>

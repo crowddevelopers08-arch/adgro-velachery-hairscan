@@ -106,14 +106,14 @@ export function InfoSection({ onStartScan }: InfoSectionProps) {
           <h2 style={{ fontSize: "clamp(1.8rem, 4.5vw, 3rem)", fontWeight: 900, lineHeight: 1.15, marginBottom: "20px", letterSpacing: "-0.025em", color: "#1a1a1a" }}>
             Hair Fall Problems?{" "}
             <span style={{ background: "linear-gradient(135deg, #ea2424, #f87171)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-              Adgro Hair Ambattur
+              Adgro Hair Velachery
             </span>{" "}
             Has the Solution!
           </h2>
 
           <p style={{ fontSize: "1.05rem", lineHeight: 1.8, color: "#6b6b6b", maxWidth: "640px", margin: "0 auto 0" }}>
             Is hair fall increasing every day? Using products but seeing no results? Without understanding the root cause,
-            it&apos;s a waste to keep trying. At Adgro Hair Ambattur, we identify the{" "}
+            it&apos;s a waste to keep trying. At Adgro Hair Velachery, we identify the{" "}
             <strong style={{ color: RED, fontWeight: 700 }}>real reason</strong> behind your hair loss — online, instantly.
           </p>
         </div>
@@ -236,7 +236,7 @@ export function InfoSection({ onStartScan }: InfoSectionProps) {
               <h2 style={{ fontSize: "clamp(1.6rem, 3.5vw, 2.6rem)", fontWeight: 900, lineHeight: 1.18, letterSpacing: "-0.025em", marginBottom: "18px", color: "#1a1a1a" }}>
                 What Will You Get at{" "}
                 <span style={{ background: "linear-gradient(135deg, #ea2424, #f87171)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-                  Adgro Hair Ambattur?
+                  Adgro Hair Velachery?
                 </span>
               </h2>
               <p style={{ color: "#6b6b6b", lineHeight: 1.8, fontSize: "0.98rem", marginBottom: "28px" }}>
@@ -309,7 +309,7 @@ export function InfoSection({ onStartScan }: InfoSectionProps) {
             <h2 style={{ fontSize: "clamp(1.6rem, 3.5vw, 2.4rem)", fontWeight: 800, letterSpacing: "-0.025em", color: "#1a1a1a" }}>
               What Makes{" "}
               <span style={{ background: "linear-gradient(135deg, #ea2424, #f87171)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-                Adgro Hair Ambattur
+                Adgro Hair Velachery
               </span>{" "}
               Different?
             </h2>
@@ -390,7 +390,7 @@ export function InfoSection({ onStartScan }: InfoSectionProps) {
             </span>
           </h2>
           <p style={{ color: "#6b6b6b", marginBottom: "16px", fontSize: "1rem", lineHeight: 1.75, maxWidth: "500px", margin: "0 auto 16px" }}>
-            At Adgro Hair Ambattur, we understand Indian hair problems with 2000+ hair transformations, board certified experts, FDA-approved equipment, 24/7 support, no cost EMI, and 60+ clinics nationwide.
+            At Adgro Hair Velachery, we understand Indian hair problems with 2000+ hair transformations, board certified experts, FDA-approved equipment, 24/7 support, no cost EMI, and 60+ clinics nationwide.
           </p>
 
           {/* Dot divider */}
@@ -402,7 +402,7 @@ export function InfoSection({ onStartScan }: InfoSectionProps) {
 
           <div className="is-cta-btns">
             <a
-              href="tel:+917409256789"
+              href="tel:+918390856789"
               className="is-cta-btn"
               style={{
                 display: "flex", alignItems: "center", gap: "10px",
@@ -418,14 +418,14 @@ export function InfoSection({ onStartScan }: InfoSectionProps) {
               onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(0)"; (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 8px 28px rgba(234,36,36,0.3)" }}
             >
               <Phone style={{ width: 20, height: 20 }} />
-              Call +91 7409256789
+              Call +91 8390856789
             </a>
           </div>
           <div style={{ marginTop: "22px", color: "#6b6b6b", fontSize: "0.86rem", lineHeight: 1.7 }}>
-            <p style={{ fontWeight: 700, color: "#1a1a1a", marginBottom: "4px" }}>Adgro Hair Ambattur</p>
-            <p>Sai Health and Beauty Ventures, KAVITHA RAVIKUMAR, New No 122/124/1, New No 124/102, Redhills Main Road, Vijaylakshmipuram, NVA FTTH RSU, Ambattur, Thiruvallur, Tamil Nadu - 600053</p>
+            <p style={{ fontWeight: 700, color: "#1a1a1a", marginBottom: "4px" }}>Adgro Hair Velachery</p>
+            <p>Second Floor Block No.20, Sankaran Avenue, Plot No.31, Pandian St, Indira Gandhi Nagar, Velachery, Chennai, Tamil Nadu 600042</p>
             <p>
-              <a href="mailto:customercare@adgrohairambattur.in" style={{ color: RED, textDecoration: "none", fontWeight: 700 }}>customercare@adgrohairambattur.in</a>
+              <a href="mailto:customercare@adgrohairvelachery.in" style={{ color: RED, textDecoration: "none", fontWeight: 700 }}>customercare@adgrohairvelachery.in</a>
             </p>
           </div>
           <p style={{ marginTop: "18px", fontSize: "0.82rem", color: "rgba(234,36,36,0.5)", fontStyle: "italic" }}>

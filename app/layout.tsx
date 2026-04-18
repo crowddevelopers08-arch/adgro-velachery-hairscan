@@ -12,8 +12,8 @@ const outfit = Outfit({
 })
 
 export const metadata: Metadata = {
-  title: 'Adgro Hair Ambattur - AI Hair Analysis',
-  description: 'Get instant AI-powered hair analysis at Adgro Hair Ambattur with expert-guided treatments, FDA-approved equipment, and trusted support across Tamil Nadu.',
+  title: 'Adgro Hair Velachery - AI Hair Analysis',
+  description: 'Get instant AI-powered hair analysis at Adgro Hair Velachery with expert-guided treatments, FDA-approved equipment, and trusted support across Tamil Nadu.',
   generator: 'v0.app',
   icons: {
     icon: '/logo-1.png',

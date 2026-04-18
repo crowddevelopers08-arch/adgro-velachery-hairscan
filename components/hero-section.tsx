@@ -51,10 +51,10 @@ export function HeroSection({ onStartScan }: HeroSectionProps) {
         boxShadow: "0 2px 24px rgba(0,0,0,0.06)",
       }}>
         <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "11px 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <img src="/adgrologo.png" alt="Adgro Hair Ambattur" style={{ height: 42, width: "auto", objectFit: "contain" }} />
+          <img src="/adgrologo.png" alt="Adgro Hair Velachery" style={{ height: 42, width: "auto", objectFit: "contain" }} />
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
             <span style={{ fontSize: "0.8rem", color: "#6b6b6b", fontWeight: 500, display: "none" }} className="sm:block">Free AI Hair Analysis</span>
-            <a href="tel:+917409256789" style={{
+            <a href="tel:+918390856789" style={{
               display: "flex", alignItems: "center", gap: "7px",
               background: "linear-gradient(135deg,#ea2424,#c91f1f)", color: "#fff",
               borderRadius: "100px", padding: "9px 20px",
@@ -63,7 +63,7 @@ export function HeroSection({ onStartScan }: HeroSectionProps) {
               transition: "all 0.2s",
             }}>
               <Phone style={{ width: 14, height: 14 }} />
-              +91 7409256789
+              +91 8390856789
             </a>
           </div>
         </div>
@@ -244,7 +244,7 @@ export function HeroSection({ onStartScan }: HeroSectionProps) {
         }}>
           <img
             src="/adgrologo.png"
-            alt="Adgro Hair Ambattur"
+            alt="Adgro Hair Velachery"
             style={{ height: 74, width: "auto", maxWidth: "min(300px, 72vw)", objectFit: "contain" }}
           />
         </div>
@@ -280,7 +280,7 @@ export function HeroSection({ onStartScan }: HeroSectionProps) {
             letterSpacing: "-0.03em", color: "#1a1a1a",
             marginBottom: "22px",
           }}>
-            Adgro Hair Ambattur{" "}
+            Adgro Hair Velachery{" "}
             <span style={{ position: "relative", display: "inline-block" }}>
               <span style={{ background: "linear-gradient(135deg,#ea2424 0%,#ff6b6b 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
                 Understands
@@ -326,7 +326,7 @@ export function HeroSection({ onStartScan }: HeroSectionProps) {
             </button>
 
             <a
-              href="tel:+917409256789"
+              href="tel:+918390856789"
               style={{
                 display: "flex", alignItems: "center", gap: "10px",
                 background: "rgba(255,255,255,0.9)", color: "#1a1a1a",
