@@ -162,7 +162,7 @@ export function InfoSection({ onStartScan }: InfoSectionProps) {
               {
                 icon: <FlaskConical style={{ width: 26, height: 26, color: RED }} />,
                 step: "02", title: "Get the Right Treatment 🔬",
-                desc: "PRP, GFC, or Hair Transplant? We guide you to the right treatment, decided scientifically based on your condition.",
+                desc: "Growth Refactor, GFC, or Hair Transplant? We guide you to the right treatment, decided scientifically based on your condition.",
                 points: ["FDA-approved therapies", "Scientific diagnosis", "Stage-wise treatment plan"],
               },
               {

@@ -24,7 +24,7 @@ const guides: Record<string, Guide> = {
       {
         heading: "Solution",
         items: [
-          "PRP - Controls hair fall and strengthens roots",
+          "Growth Refactor - Controls hair fall and strengthens roots",
           "GFC - Improves regrowth and thickness",
           "Mesotherapy - Nourishes scalp",
           "OLT - Supports root strength",
@@ -35,8 +35,8 @@ const guides: Record<string, Guide> = {
         heading: "Stage & What You Should Do",
         items: [
           "Early Stage: Start OLT + scalp care. Hair fall can be controlled quickly.",
-          "Moderate Stage: PRP / GFC sessions required. Strengthens follicles and reduces fall.",
-          "Advanced Stage: PRP + GFC + supportive therapies. Prevent further loss and improve density.",
+          "Moderate Stage: Growth Refactor / GFC sessions required. Strengthens follicles and reduces fall.",
+          "Advanced Stage: Growth Refactor + GFC + supportive therapies. Prevent further loss and improve density.",
         ],
       },
       {
@@ -74,7 +74,7 @@ const guides: Record<string, Guide> = {
       {
         heading: "Solution",
         items: [
-          "PRP - Activates weak follicles",
+          "Growth Refactor - Activates weak follicles",
           "GFC - Improves crown density",
           "Mesotherapy - Strengthens scalp",
           "Hair Transplant - For advanced stages",
@@ -84,7 +84,7 @@ const guides: Record<string, Guide> = {
         heading: "Stage & What You Should Do",
         items: [
           "Early Stage: OLT + scalp care. Can reverse thinning.",
-          "Moderate Stage: PRP / GFC recommended. Visible density improvement.",
+          "Moderate Stage: Growth Refactor / GFC recommended. Visible density improvement.",
           "Advanced Stage: Hair Transplant. Permanent restoration.",
         ],
       },
@@ -124,7 +124,7 @@ const guides: Record<string, Guide> = {
       {
         heading: "Solution",
         items: [
-          "PRP - Slows hairline recession",
+          "Growth Refactor - Slows hairline recession",
           "GFC - Improves hair thickness",
           "Mesotherapy - Nourishes follicles",
           "Hair Transplant - Rebuilds hairline",
@@ -134,7 +134,7 @@ const guides: Record<string, Guide> = {
         heading: "Stage & What You Should Do",
         items: [
           "Early Stage: OLT + preventive care. Slows down hairline loss.",
-          "Moderate Stage: PRP / GFC. Strengthens and regrows hair.",
+          "Moderate Stage: Growth Refactor / GFC. Strengthens and regrows hair.",
           "Advanced Stage: Hair Transplant. Restores natural hairline.",
         ],
       },
@@ -223,7 +223,7 @@ const guides: Record<string, Guide> = {
         heading: "Solution",
         items: [
           "GFC - Boosts density",
-          "PRP - Strengthens follicles",
+          "Growth Refactor - Strengthens follicles",
           "Mesotherapy - Improves nourishment",
           "Hair Transplant - For advanced thinning",
         ],
@@ -232,7 +232,7 @@ const guides: Record<string, Guide> = {
         heading: "Stage & What You Should Do",
         items: [
           "Early Stage: OLT + nutrition. Improves thickness.",
-          "Moderate Stage: PRP / GFC. Increases density.",
+          "Moderate Stage: Growth Refactor / GFC. Increases density.",
           "Advanced Stage: Hair Transplant. Restores volume.",
         ],
       },
