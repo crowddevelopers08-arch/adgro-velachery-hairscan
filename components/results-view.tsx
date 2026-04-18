@@ -355,8 +355,7 @@ export function ResultsView({ formData, capturedImage, onBack }: ResultsViewProp
                   value={locationSelect}
                   onChange={(e) => {
                     setLocationSelect(e.target.value)
-                    if (e.target.value !== "other") setDetailsForm({ ...detailsForm, location: e.target.value })
-                    else setDetailsForm({ ...detailsForm, location: "" })
+                    setDetailsForm({ ...detailsForm, location: e.target.value })
                   }}
                   style={{
                     height: 44, width: "100%", borderRadius: "10px",
@@ -365,23 +364,10 @@ export function ResultsView({ formData, capturedImage, onBack }: ResultsViewProp
                     outline: "none", fontFamily: "inherit",
                   }}
                 >
-                  <option value="">Select your location</option>
-                  <option value="Trichy">Trichy</option>
-                  <option value="Coimbatore">Coimbatore</option>
-                  <option value="Madurai">Madurai</option>
+                  <option value="">Select your nearest location</option>
                   <option value="Ambattur">Ambattur</option>
-                  <option value="other">Other location</option>
+                  <option value="Velachery">Velachery</option>
                 </select>
-                {locationSelect === "other" && (
-                  <Input
-                    id="report-location-other"
-                    placeholder="Enter your location"
-                    value={detailsForm.location}
-                    onChange={(e) => setDetailsForm({ ...detailsForm, location: e.target.value })}
-                    style={{ height: 44, borderRadius: "10px", fontFamily: "inherit", fontSize: "0.9rem" }}
-                    autoFocus
-                  />
-                )}
               </div>
               <button
                 type="submit"
