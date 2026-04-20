@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
@@ -55,25 +56,8 @@ const resultsData = {
 
 type SkinProblemKey = keyof typeof resultsData
 
-async function downloadSkinGuide(problem: SkinProblemKey, name: string, fileName: string) {
-  const params = new URLSearchParams({ problem, name })
-  const response = await fetch(`/api/skin-guide?${params.toString()}`)
-  if (!response.ok) {
-    throw new Error("Failed to generate PDF")
-  }
-
-  const blob = await response.blob()
-  const blobUrl = window.URL.createObjectURL(blob)
-  const link = document.createElement("a")
-  link.href = blobUrl
-  link.download = fileName
-  document.body.appendChild(link)
-  link.click()
-  document.body.removeChild(link)
-  window.URL.revokeObjectURL(blobUrl)
-}
-
 export function SkinResultsView({ formData, capturedImage, onBack }: SkinResultsViewProps) {
+  const router = useRouter()
   const [pdfFormOpen, setPdfFormOpen] = useState(false)
   const [pdfGenerating, setPdfGenerating] = useState(false)
   const [pdfForm, setPdfForm] = useState({ name: formData.name || "", phone: formData.phone || "" })
@@ -108,9 +92,18 @@ export function SkinResultsView({ formData, capturedImage, onBack }: SkinResults
         throw new Error(payload?.error || "Failed to save scan")
       }
 
-      await downloadSkinGuide(problem, pdfForm.name.trim(), `${data.docTitle.replace(/\s+/g, "_")}.pdf`)
       setPdfFormOpen(false)
-      window.location.assign("/thank-you")
+      sessionStorage.setItem(
+        "adgro-report",
+        JSON.stringify({
+          type: "skin",
+          problem,
+          name: pdfForm.name.trim(),
+          phone: pdfForm.phone.trim(),
+          capturedImage,
+        })
+      )
+      router.push("/report")
     } catch (err) {
       console.error("Submit/download failed:", err)
       if (err instanceof Error && err.message.includes("Failed to save scan")) {
@@ -235,7 +228,7 @@ export function SkinResultsView({ formData, capturedImage, onBack }: SkinResults
               </div>
               <Button type="submit" disabled={!pdfForm.name.trim() || !pdfForm.phone.trim()} className="mt-2 w-full bg-primary text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_20px_rgba(221,185,90,0.4)] disabled:opacity-50">
                 <Download className="mr-2 h-4 w-4" />
-                Generate & Download PDF
+                View Report
               </Button>
             </form>
           )}
