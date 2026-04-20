@@ -30,6 +30,21 @@ type HairReport = {
   stages: Stage[]
 }
 
+const stageImages: Record<string, { src: string; alt: string }> = {
+  "Early Stage": {
+    src: "/st1.png",
+    alt: "Early stage hair density example",
+  },
+  "Moderate Stage": {
+    src: "/st2.png",
+    alt: "Moderate stage hair thinning example",
+  },
+  "Advanced Stage": {
+    src: "/st3.png",
+    alt: "Advanced stage hair loss example",
+  },
+}
+
 const reportData: Record<HairProblemKey, HairReport> = {
   "crown-thinning": {
     title: "Crown Thinning Report",
@@ -318,9 +333,10 @@ const reportData: Record<HairProblemKey, HairReport> = {
 
 interface HairReportDetailsProps {
   problem: HairProblemKey
+  scannedImage?: string | null
 }
 
-export function HairReportDetails({ problem }: HairReportDetailsProps) {
+export function HairReportDetails({ problem, scannedImage }: HairReportDetailsProps) {
   const report = reportData[problem] ?? reportData["hair-fall"]
 
   return (
@@ -339,6 +355,14 @@ export function HairReportDetails({ problem }: HairReportDetailsProps) {
           padding: 28px 30px;
           background: linear-gradient(135deg, rgba(234,36,36,0.10), rgba(13,148,136,0.06));
           border-bottom: 1px solid rgba(234,36,36,0.12);
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) auto;
+          gap: 22px;
+          align-items: center;
+        }
+
+        .hair-report-header-copy {
+          min-width: 0;
         }
 
         .hair-report-kicker {
@@ -366,6 +390,24 @@ export function HairReportDetails({ problem }: HairReportDetailsProps) {
           color: #5f5651;
           font-size: 0.95rem;
           line-height: 1.7;
+        }
+
+        .hair-report-scan {
+          width: 132px;
+          aspect-ratio: 1 / 1;
+          border-radius: 18px;
+          overflow: hidden;
+          background: rgba(255,255,255,0.72);
+          border: 1px solid rgba(234,36,36,0.16);
+          box-shadow: 0 16px 40px rgba(83,27,20,0.13);
+        }
+
+        .hair-report-scan img {
+          display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
         }
 
         .hair-report-body {
@@ -451,15 +493,49 @@ export function HairReportDetails({ problem }: HairReportDetailsProps) {
 
         .hair-stage-card {
           display: grid;
-          grid-template-columns: 128px minmax(0, 1fr);
-          gap: 14px;
+          grid-template-columns: 176px minmax(0, 1fr);
+          gap: 22px;
           align-items: start;
+          padding: 20px;
+        }
+
+        .hair-stage-visual {
+          display: grid;
+          gap: 14px;
+          justify-items: center;
+        }
+
+        .hair-stage-image {
+          width: 142px;
+          max-width: 100%;
+          aspect-ratio: 1 / 1;
+          border-radius: 999px;
+          overflow: hidden;
+          background: #f4ece8;
+          box-shadow: 0 12px 28px rgba(83,27,20,0.12), inset 0 0 0 1px rgba(234,36,36,0.08);
+        }
+
+        .hair-stage-image img {
+          display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+        }
+
+        .hair-stage-content {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          min-height: 100%;
+          padding: 4px 0;
         }
 
         .hair-stage-badge {
           display: inline-flex;
           align-items: center;
           justify-content: center;
+          width: min(100%, 188px);
           min-height: 38px;
           border-radius: 999px;
           background: linear-gradient(135deg, #ea2424, #c91f1f);
@@ -471,16 +547,48 @@ export function HairReportDetails({ problem }: HairReportDetailsProps) {
           box-shadow: 0 10px 24px rgba(234,36,36,0.22);
         }
 
+        .hair-stage-copy {
+          min-width: 0;
+        }
+
         .hair-stage-meta {
           color: #342d2a;
           font-weight: 800;
         }
 
         @media (max-width: 680px) {
-          .hair-report-header,
           .hair-report-body {
-            padding-left: 20px;
-            padding-right: 20px;
+            padding: 22px 16px 26px;
+          }
+
+          .hair-report-header {
+            grid-template-columns: minmax(0, 1fr) 96px;
+            gap: 12px;
+            padding: 20px 16px;
+            align-items: start;
+          }
+
+          .hair-report-kicker {
+            font-size: 10px;
+            gap: 6px;
+            margin-bottom: 8px;
+            letter-spacing: 0.11em;
+          }
+
+          .hair-report-title {
+            font-size: 1.38rem;
+            line-height: 1.16;
+            margin-bottom: 8px;
+          }
+
+          .hair-report-detected {
+            font-size: 0.88rem;
+            line-height: 1.5;
+          }
+
+          .hair-report-scan {
+            width: 96px;
+            border-radius: 16px;
           }
 
           .hair-solutions-grid {
@@ -489,24 +597,92 @@ export function HairReportDetails({ problem }: HairReportDetailsProps) {
 
           .hair-stage-card {
             grid-template-columns: 1fr;
+            gap: 16px;
+            padding: 16px;
+          }
+
+          .hair-stage-visual {
+            justify-items: center;
+          }
+
+          .hair-stage-image {
+            width: 132px;
           }
 
           .hair-stage-badge {
-            justify-content: flex-start;
-            width: fit-content;
+            justify-content: center;
+            width: min(100%, 156px);
+          }
+
+          .hair-stage-content {
+            padding: 0;
+          }
+        }
+
+        @media (max-width: 440px) {
+          .hair-report-header {
+            grid-template-columns: minmax(0, 1fr) 82px;
+            gap: 10px;
+          }
+
+          .hair-report-title {
+            font-size: 1.18rem;
+          }
+
+          .hair-report-kicker {
+            font-size: 9px;
+            letter-spacing: 0.09em;
+          }
+
+          .hair-report-detected {
+            font-size: 0.82rem;
+          }
+
+          .hair-report-scan {
+            width: 82px;
+            border-radius: 14px;
+          }
+
+          .hair-stage-card {
+            grid-template-columns: 1fr;
+          }
+
+          .hair-stage-image {
+            width: 124px;
+          }
+
+          .hair-stage-badge {
+            margin: 0 auto;
+          }
+        }
+
+        @media (max-width: 340px) {
+          .hair-report-header {
+            grid-template-columns: 1fr;
+          }
+
+          .hair-report-scan {
+            width: 104px;
           }
         }
       `}</style>
 
       <div className="hair-report-header">
-        <p className="hair-report-kicker">
-          <ClipboardList style={{ width: 15, height: 15 }} />
-          Personalized Report
-        </p>
-        <h2 className="hair-report-title">{report.title}</h2>
-        <p className="hair-report-detected">
-          <strong>Problem Detected:</strong> {report.detected}
-        </p>
+        <div className="hair-report-header-copy">
+          <p className="hair-report-kicker">
+            <ClipboardList style={{ width: 15, height: 15 }} />
+            Personalized Report
+          </p>
+          <h2 className="hair-report-title">{report.title}</h2>
+          <p className="hair-report-detected">
+            <strong>Problem Detected:</strong> {report.detected}
+          </p>
+        </div>
+        {scannedImage && (
+          <div className="hair-report-scan">
+            <img src={scannedImage} alt="User scanned hair image" />
+          </div>
+        )}
       </div>
 
       <div className="hair-report-body">
@@ -545,13 +721,23 @@ export function HairReportDetails({ problem }: HairReportDetailsProps) {
           <div className="hair-stages">
             {report.stages.map((stage) => (
               <article className="hair-stage-card" key={stage.title}>
-                <div className="hair-stage-badge">{stage.title}</div>
-                <div>
-                  <p>{stage.description}</p>
-                  {stage.recommendation && (
-                    <p><span className="hair-stage-meta">Recommendation:</span> {stage.recommendation}</p>
-                  )}
-                  <p><span className="hair-stage-meta">Benefit:</span> {stage.benefit}</p>
+                <div className="hair-stage-visual">
+                  <div className="hair-stage-image">
+                    <img
+                      src={stageImages[stage.title]?.src ?? "/st1.png"}
+                      alt={stageImages[stage.title]?.alt ?? `${stage.title} hair example`}
+                    />
+                  </div>
+                  <div className="hair-stage-badge">{stage.title}</div>
+                </div>
+                <div className="hair-stage-content">
+                  <div className="hair-stage-copy">
+                    <p>{stage.description}</p>
+                    {stage.recommendation && (
+                      <p><span className="hair-stage-meta">Recommendation:</span> {stage.recommendation}</p>
+                    )}
+                    <p><span className="hair-stage-meta">Benefit:</span> {stage.benefit}</p>
+                  </div>
                 </div>
               </article>
             ))}
