@@ -281,7 +281,8 @@ export function InfoSection({ onStartScan }: InfoSectionProps) {
       {/* Divider */}
       <div style={{ height: "1px", background: "linear-gradient(90deg, transparent, rgba(234,36,36,0.2), transparent)" }} />
 
-      {/* ══ SECTION 4 – STATS ══ */}
+      {/* Section 4 - Stats hidden by request */}
+      {false && (
       <section className="is-pad" style={{ position: "relative", overflow: "hidden", background: "#fff" }}>
         {/* BG: wave SVG top */}
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, pointerEvents: "none", lineHeight: 0 }}>
@@ -342,6 +343,7 @@ export function InfoSection({ onStartScan }: InfoSectionProps) {
           </div>
         </div>
       </section>
+      )}
 
       {/* Divider */}
       <div style={{ height: "1px", background: "linear-gradient(90deg, transparent, rgba(234,36,36,0.2), transparent)" }} />
