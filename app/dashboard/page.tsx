@@ -35,6 +35,20 @@ const skinProblems = [
   "open-pores",
 ]
 
+const telecrmLabels: Record<string, string> = {
+  pending: "Pending",
+  synced: "Synced",
+  failed: "Failed",
+  skipped: "Skipped",
+}
+
+const telecrmClasses: Record<string, string> = {
+  pending: "border-amber-200 bg-amber-50 text-amber-700",
+  synced: "border-emerald-200 bg-emerald-50 text-emerald-700",
+  failed: "border-red-200 bg-red-50 text-red-700",
+  skipped: "border-slate-200 bg-slate-50 text-slate-600",
+}
+
 type DashboardSearchParams = Promise<{
   q?: string
   problem?: string
@@ -141,6 +155,32 @@ export default async function DashboardPage({
                 <p className="text-sm text-muted-foreground">{scan.phone}</p>
                 {scan.location && (
                   <p className="text-sm text-muted-foreground">{scan.location}</p>
+                )}
+                <div className="flex flex-wrap items-center gap-2 pt-1">
+                  <span
+                    className={`rounded-full border px-2.5 py-1 text-xs font-semibold ${telecrmClasses[scan.telecrmStatus] ?? telecrmClasses.pending}`}
+                  >
+                    TeleCRM: {telecrmLabels[scan.telecrmStatus] ?? scan.telecrmStatus}
+                  </span>
+                  <span className="rounded-full border border-border bg-muted px-2.5 py-1 text-xs font-semibold text-muted-foreground">
+                    {scan.formName || "hairscan-lp leads"}
+                  </span>
+                </div>
+                {scan.telecrmLeadIds && (
+                  <p className="text-xs text-muted-foreground">
+                    TeleCRM ID: {scan.telecrmLeadIds}
+                  </p>
+                )}
+                {scan.sourceUrl && (
+                  <a
+                    href={scan.sourceUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="block truncate text-xs font-medium text-primary hover:underline"
+                    title={scan.sourceUrl}
+                  >
+                    {scan.sourceUrl}
+                  </a>
                 )}
                 <p className="text-xs text-muted-foreground">
                   {new Date(scan.createdAt).toLocaleString(undefined, { year: "numeric", month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" })}

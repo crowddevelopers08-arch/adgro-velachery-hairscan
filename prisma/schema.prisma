@@ -9,11 +9,17 @@ datasource db {
 }
 
 model Scan {
-  id        Int      @id @default(autoincrement())
-  name      String
-  phone     String
-  location  String   @default("")
-  problem   String
-  imageData String
-  createdAt DateTime @default(now())
+  id              Int       @id @default(autoincrement())
+  name            String
+  phone           String
+  location        String    @default("")
+  problem         String
+  imageData       String
+  sourceUrl       String    @default("")
+  formName        String    @default("hairscan-lp leads")
+  telecrmStatus   String    @default("pending")
+  telecrmLeadIds  String    @default("")
+  telecrmResponse String    @default("")
+  telecrmSyncedAt DateTime?
+  createdAt       DateTime  @default(now())
 }
