@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
+import Script from "next/script"
 import { ArrowLeft, Download, FileText, Loader2, Phone } from "lucide-react"
 import { HairReportDetails, type HairProblemKey } from "@/components/hair-report-details"
 
@@ -207,7 +208,11 @@ export default function ReportPage() {
   const accent = isSkin ? "#ddb95a" : "#ea2424"
 
   return (
-    <main style={{ minHeight: "100vh", background: pageBg, color: textColor, fontFamily: "var(--font-outfit, 'Outfit', sans-serif)" }}>
+    <>
+      <Script id="meta-pixel-report-submit-application" strategy="afterInteractive">
+        {`fbq('track', 'SubmitApplication');`}
+      </Script>
+      <main style={{ minHeight: "100vh", background: pageBg, color: textColor, fontFamily: "var(--font-outfit, 'Outfit', sans-serif)" }}>
       <div style={{ position: "sticky", top: 0, zIndex: 10, background: isSkin ? "rgba(8,11,18,0.92)" : "rgba(255,255,255,0.92)", backdropFilter: "blur(16px)", borderBottom: `1px solid ${isSkin ? "rgba(221,185,90,0.14)" : "rgba(234,36,36,0.1)"}` }}>
         <div style={{ maxWidth: 860, margin: "0 auto", padding: "12px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 14 }}>
           <Link href={isSkin ? "/skin" : "/"} style={{ display: "inline-flex", alignItems: "center", gap: 7, color: isSkin ? "#bdb8ae" : "#6b6b6b", textDecoration: "none", fontSize: "0.875rem", fontWeight: 700 }}>
@@ -275,6 +280,7 @@ export default function ReportPage() {
           </>
         )}
       </div>
-    </main>
+      </main>
+    </>
   )
 }
