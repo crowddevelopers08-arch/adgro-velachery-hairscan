@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma"
 import { DateRangePicker } from "@/components/ui/date-range-picker"
+import { Download } from "lucide-react"
 
 export const dynamic = "force-dynamic"
 export const revalidate = 0
@@ -112,6 +113,14 @@ export default async function DashboardPage({
 
   const hairScans = filteredScans.filter((scan) => isHairProblem(scan.problem))
   const skinScans = filteredScans.filter((scan) => isSkinProblem(scan.problem))
+  const exportSearchParams = new URLSearchParams()
+
+  if (resolvedSearchParams.q) exportSearchParams.set("q", resolvedSearchParams.q)
+  if (selectedProblem) exportSearchParams.set("problem", selectedProblem)
+  if (selectedDateFrom) exportSearchParams.set("dateFrom", selectedDateFrom)
+  if (selectedDateTo) exportSearchParams.set("dateTo", selectedDateTo)
+
+  const exportHref = `/api/leads/export${exportSearchParams.toString() ? `?${exportSearchParams.toString()}` : ""}`
 
   const renderScanGrid = (scans: typeof hairScans, title: string) => (
     <section className="rounded-3xl border border-border bg-card/60 p-5 shadow-sm">
@@ -153,9 +162,6 @@ export default async function DashboardPage({
                   <p className="text-xs text-muted-foreground">#{scan.id}</p>
                 </div>
                 <p className="text-sm text-muted-foreground">{scan.phone}</p>
-                {scan.location && (
-                  <p className="text-sm text-muted-foreground">{scan.location}</p>
-                )}
                 <div className="flex flex-wrap items-center gap-2 pt-1">
                   <span
                     className={`rounded-full border px-2.5 py-1 text-xs font-semibold ${telecrmClasses[scan.telecrmStatus] ?? telecrmClasses.pending}`}
@@ -196,12 +202,21 @@ export default async function DashboardPage({
   return (
     <main className="min-h-screen bg-background p-6">
       <div className="mx-auto max-w-7xl space-y-8">
-        <div className="border-b border-border pb-6">
-          <h1 className="text-3xl font-bold text-foreground">Scan Dashboard</h1>
-          <p className="mt-1 text-muted-foreground">
-            {filteredScans.length} filtered {filteredScans.length === 1 ? "record" : "records"}
-            {" "}from {scans.length} total
-          </p>
+        <div className="flex flex-wrap items-start justify-between gap-4 border-b border-border pb-6">
+          <div>
+            <h1 className="text-3xl font-bold text-foreground">Scan Dashboard</h1>
+            <p className="mt-1 text-muted-foreground">
+              {filteredScans.length} filtered {filteredScans.length === 1 ? "record" : "records"}
+              {" "}from {scans.length} total
+            </p>
+          </div>
+          <a
+            href={exportHref}
+            className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-primary px-5 text-sm font-semibold text-primary-foreground transition hover:opacity-90"
+          >
+            <Download className="h-4 w-4" />
+            Download Excel
+          </a>
         </div>
 
         <form className="grid gap-4 rounded-3xl border border-border bg-card/60 p-5 shadow-sm md:grid-cols-4">

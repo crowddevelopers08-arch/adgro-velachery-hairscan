@@ -51,7 +51,6 @@ function toShortJson(value: unknown) {
 async function syncTelecrmLead(input: {
   name: string
   phone: string
-  location: string
   problem: string
   sourceUrl: string
 }): Promise<TelecrmResult> {
@@ -68,7 +67,6 @@ async function syncTelecrmLead(input: {
   const fields: Record<string, string> = {
     phone: input.phone,
     name: input.name,
-    location: input.location,
     problem: input.problem,
     [formNameField]: FORM_NAME,
     [liveUrlField]: input.sourceUrl,
@@ -99,7 +97,6 @@ async function syncTelecrmLead(input: {
 async function saveLeadToDatabase(input: {
   name: string
   phone: string
-  location: string
   problem: string
   imageData: string
   sourceUrl: string
@@ -121,7 +118,6 @@ async function saveLeadToDatabase(input: {
       data: {
         name: input.name,
         phone: input.phone,
-        location: input.location,
         problem: input.problem,
         imageData: input.imageData,
         sourceUrl: input.sourceUrl,
@@ -156,7 +152,7 @@ async function updateTelecrmStatus(scanId: number, telecrmResult: TelecrmResult)
 
 export async function POST(req: NextRequest) {
   try {
-    const { name, phone, location, problem, imageData, sourceUrl } = await req.json()
+    const { name, phone, problem, imageData, sourceUrl } = await req.json()
 
     if (!name || !phone || !problem || !imageData) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
@@ -164,14 +160,12 @@ export async function POST(req: NextRequest) {
 
     const normalizedPhone = String(phone).trim()
     const normalizedName = String(name).trim()
-    const normalizedLocation = location ? String(location).trim() : ""
     const normalizedProblem = String(problem).trim()
     const liveUrl = getLiveUrl(req, sourceUrl)
 
     const databaseResult = await saveLeadToDatabase({
       name: normalizedName,
       phone: normalizedPhone,
-      location: normalizedLocation,
       problem: normalizedProblem,
       imageData,
       sourceUrl: liveUrl,
@@ -187,7 +181,6 @@ export async function POST(req: NextRequest) {
     const telecrmResult = await syncTelecrmLead({
       name: normalizedName,
       phone: normalizedPhone,
-      location: normalizedLocation,
       problem: normalizedProblem,
       sourceUrl: liveUrl,
     }).catch((error) => ({

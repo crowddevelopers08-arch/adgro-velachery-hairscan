@@ -20,7 +20,6 @@ type ReportState =
       problem: HairProblemKey
       name: string
       phone: string
-      location?: string
       capturedImage?: string | null
     }
   | {
