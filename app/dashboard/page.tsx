@@ -53,6 +53,7 @@ const telecrmClasses: Record<string, string> = {
 type DashboardSearchParams = Promise<{
   q?: string
   problem?: string
+  area?: string
   dateFrom?: string
   dateTo?: string
 }>
@@ -92,6 +93,7 @@ export default async function DashboardPage({
   const resolvedSearchParams = (await searchParams) ?? {}
   const query = resolvedSearchParams.q?.trim().toLowerCase() ?? ""
   const selectedProblem = resolvedSearchParams.problem ?? ""
+  const selectedArea = resolvedSearchParams.area?.trim().toLowerCase() ?? ""
   const selectedDateFrom = resolvedSearchParams.dateFrom ?? ""
   const selectedDateTo = resolvedSearchParams.dateTo ?? ""
 
@@ -103,12 +105,15 @@ export default async function DashboardPage({
     const matchesQuery =
       !query ||
       scan.name.toLowerCase().includes(query) ||
-      scan.phone.toLowerCase().includes(query)
+      scan.phone.toLowerCase().includes(query) ||
+      scan.email.toLowerCase().includes(query) ||
+      scan.area.toLowerCase().includes(query)
 
     const matchesProblem = !selectedProblem || scan.problem === selectedProblem
+    const matchesArea = !selectedArea || scan.area.toLowerCase().includes(selectedArea)
     const matchesDate = matchesDateFilter(scan.createdAt, selectedDateFrom, selectedDateTo)
 
-    return matchesQuery && matchesProblem && matchesDate
+    return matchesQuery && matchesProblem && matchesArea && matchesDate
   })
 
   const hairScans = filteredScans.filter((scan) => isHairProblem(scan.problem))
@@ -117,6 +122,7 @@ export default async function DashboardPage({
 
   if (resolvedSearchParams.q) exportSearchParams.set("q", resolvedSearchParams.q)
   if (selectedProblem) exportSearchParams.set("problem", selectedProblem)
+  if (resolvedSearchParams.area) exportSearchParams.set("area", resolvedSearchParams.area)
   if (selectedDateFrom) exportSearchParams.set("dateFrom", selectedDateFrom)
   if (selectedDateTo) exportSearchParams.set("dateTo", selectedDateTo)
 
@@ -162,6 +168,7 @@ export default async function DashboardPage({
                   <p className="text-xs text-muted-foreground">#{scan.id}</p>
                 </div>
                 <p className="text-sm text-muted-foreground">{scan.phone}</p>
+                {scan.email && <p className="text-sm text-muted-foreground">{scan.email}</p>}
                 <div className="flex flex-wrap items-center gap-2 pt-1">
                   <span
                     className={`rounded-full border px-2.5 py-1 text-xs font-semibold ${telecrmClasses[scan.telecrmStatus] ?? telecrmClasses.pending}`}
@@ -171,6 +178,11 @@ export default async function DashboardPage({
                   <span className="rounded-full border border-border bg-muted px-2.5 py-1 text-xs font-semibold text-muted-foreground">
                     {scan.formName || "hairscan-lp leads"}
                   </span>
+                  {scan.area && (
+                    <span className="rounded-full border border-primary/20 bg-primary/5 px-2.5 py-1 text-xs font-semibold text-primary">
+                      Area: {scan.area}
+                    </span>
+                  )}
                 </div>
                 {scan.telecrmLeadIds && (
                   <p className="text-xs text-muted-foreground">
@@ -219,10 +231,10 @@ export default async function DashboardPage({
           </a>
         </div>
 
-        <form className="grid gap-4 rounded-3xl border border-border bg-card/60 p-5 shadow-sm md:grid-cols-4">
+        <form className="grid gap-4 rounded-3xl border border-border bg-card/60 p-5 shadow-sm md:grid-cols-5">
           <div className="md:col-span-2">
             <label htmlFor="dashboard-search" className="mb-2 block text-sm font-medium text-foreground">
-              Search by name or phone
+              Search by name, phone, email, or area
             </label>
             <input
               id="dashboard-search"
@@ -262,6 +274,19 @@ export default async function DashboardPage({
           </div>
 
           <div>
+            <label htmlFor="dashboard-area" className="mb-2 block text-sm font-medium text-foreground">
+              Area
+            </label>
+            <input
+              id="dashboard-area"
+              name="area"
+              defaultValue={resolvedSearchParams.area ?? ""}
+              placeholder="Filter by area"
+              className="h-11 w-full rounded-xl border border-border bg-background px-4 text-sm text-foreground outline-none transition focus:border-primary"
+            />
+          </div>
+
+          <div>
             <label className="mb-2 block text-sm font-medium text-foreground">
               Date range
             </label>
@@ -271,7 +296,7 @@ export default async function DashboardPage({
             />
           </div>
 
-          <div className="flex flex-wrap items-end gap-3 md:col-span-4">
+          <div className="flex flex-wrap items-end gap-3 md:col-span-5">
             <button
               type="submit"
               className="inline-flex h-11 items-center justify-center rounded-xl bg-primary px-5 text-sm font-semibold text-primary-foreground transition hover:opacity-90"

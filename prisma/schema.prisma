@@ -12,7 +12,8 @@ model Scan {
   id              Int       @id @default(autoincrement())
   name            String
   phone           String
-  location        String    @default("")
+  email           String    @default("")
+  area            String    @default("") @map("location")
   problem         String
   imageData       String
   sourceUrl       String    @default("")

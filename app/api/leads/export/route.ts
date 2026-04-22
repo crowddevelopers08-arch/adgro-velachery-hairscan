@@ -91,6 +91,7 @@ export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams
   const query = searchParams.get("q")?.trim().toLowerCase() ?? ""
   const selectedProblem = searchParams.get("problem") ?? ""
+  const selectedArea = searchParams.get("area")?.trim().toLowerCase() ?? ""
   const selectedDateFrom = searchParams.get("dateFrom") ?? ""
   const selectedDateTo = searchParams.get("dateTo") ?? ""
 
@@ -102,12 +103,15 @@ export async function GET(req: NextRequest) {
     const matchesQuery =
       !query ||
       scan.name.toLowerCase().includes(query) ||
-      scan.phone.toLowerCase().includes(query)
+      scan.phone.toLowerCase().includes(query) ||
+      scan.email.toLowerCase().includes(query) ||
+      scan.area.toLowerCase().includes(query)
 
     const matchesProblem = !selectedProblem || scan.problem === selectedProblem
+    const matchesArea = !selectedArea || scan.area.toLowerCase().includes(selectedArea)
     const matchesDate = matchesDateFilter(scan.createdAt, selectedDateFrom, selectedDateTo)
 
-    return matchesQuery && matchesProblem && matchesDate
+    return matchesQuery && matchesProblem && matchesArea && matchesDate
   })
 
   const headers = [
@@ -115,6 +119,8 @@ export async function GET(req: NextRequest) {
     "Lead Type",
     "Name",
     "Phone",
+    "Email",
+    "Area",
     "Concern",
     "TeleCRM Status",
     "TeleCRM Lead IDs",
@@ -128,6 +134,8 @@ export async function GET(req: NextRequest) {
     leadType(scan.problem),
     scan.name,
     scan.phone,
+    scan.email,
+    scan.area,
     problemLabels[scan.problem] ?? scan.problem,
     telecrmLabels[scan.telecrmStatus] ?? scan.telecrmStatus,
     scan.telecrmLeadIds,

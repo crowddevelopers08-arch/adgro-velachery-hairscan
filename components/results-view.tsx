@@ -69,7 +69,12 @@ export function ResultsView({ formData, capturedImage, onBack }: ResultsViewProp
   const router = useRouter()
   const [detailsFormOpen, setDetailsFormOpen] = useState(false)
   const [submitting, setSubmitting] = useState(false)
-  const [detailsForm, setDetailsForm] = useState({ name: formData.name || "", phone: formData.phone || "" })
+  const [detailsForm, setDetailsForm] = useState({
+    name: formData.name || "",
+    phone: formData.phone || "",
+    email: formData.email || "",
+    area: formData.area || "",
+  })
   const [submitError, setSubmitError] = useState<string | null>(null)
 
   const problem = (formData.problem || "hair-fall") as HairProblemKey
@@ -77,14 +82,24 @@ export function ResultsView({ formData, capturedImage, onBack }: ResultsViewProp
   const RED = "#ea2424"
 
   const handleViewReport = () => {
-    setDetailsForm({ name: formData.name || "", phone: formData.phone || "" })
+    setDetailsForm({
+      name: formData.name || "",
+      phone: formData.phone || "",
+      email: formData.email || "",
+      area: formData.area || "",
+    })
     setSubmitError(null)
     setDetailsFormOpen(true)
   }
 
   const handleDetailsSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (!detailsForm.name.trim() || !detailsForm.phone.trim()) return
+    if (
+      !detailsForm.name.trim() ||
+      !detailsForm.phone.trim() ||
+      !detailsForm.email.trim() ||
+      !detailsForm.area.trim()
+    ) return
     setSubmitting(true)
     try {
       const saveRes = await fetch("/api/save-scan", {
@@ -93,6 +108,8 @@ export function ResultsView({ formData, capturedImage, onBack }: ResultsViewProp
         body: JSON.stringify({
           name: detailsForm.name,
           phone: detailsForm.phone,
+          email: detailsForm.email,
+          area: detailsForm.area,
           problem,
           imageData: capturedImage ?? "",
           sourceUrl: window.location.href,
@@ -110,6 +127,8 @@ export function ResultsView({ formData, capturedImage, onBack }: ResultsViewProp
           problem,
           name: detailsForm.name.trim(),
           phone: detailsForm.phone.trim(),
+          email: detailsForm.email.trim(),
+          area: detailsForm.area.trim(),
           capturedImage,
         })
       )
@@ -332,6 +351,7 @@ export function ResultsView({ formData, capturedImage, onBack }: ResultsViewProp
                 <Label htmlFor="report-name" style={{ fontWeight: 600, fontSize: "0.85rem", color: "#1a1a1a" }}>Your Name</Label>
                 <Input
                   id="report-name"
+                  required
                   placeholder="Enter your full name"
                   value={detailsForm.name}
                   onChange={(e) => setDetailsForm({ ...detailsForm, name: e.target.value })}
@@ -343,6 +363,7 @@ export function ResultsView({ formData, capturedImage, onBack }: ResultsViewProp
                 <Input
                   id="report-phone"
                   type="tel"
+                  required
                   placeholder="Enter your phone number"
                   value={detailsForm.phone}
                   onChange={(e) => { setSubmitError(null); setDetailsForm({ ...detailsForm, phone: e.target.value }) }}
@@ -353,9 +374,32 @@ export function ResultsView({ formData, capturedImage, onBack }: ResultsViewProp
                 />
                 {submitError && <p style={{ fontSize: "0.78rem", fontWeight: 600, color: "#ea2424" }}>{submitError}</p>}
               </div>
+              <div className="flex flex-col gap-1.5">
+                <Label htmlFor="report-email" style={{ fontWeight: 600, fontSize: "0.85rem", color: "#1a1a1a" }}>Email</Label>
+                <Input
+                  id="report-email"
+                  type="email"
+                  required
+                  placeholder="Enter your email"
+                  value={detailsForm.email}
+                  onChange={(e) => setDetailsForm({ ...detailsForm, email: e.target.value })}
+                  style={{ height: 44, borderRadius: "10px", fontFamily: "inherit", fontSize: "0.9rem" }}
+                />
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <Label htmlFor="report-area" style={{ fontWeight: 600, fontSize: "0.85rem", color: "#1a1a1a" }}>Area</Label>
+                <Input
+                  id="report-area"
+                  required
+                  placeholder="Enter your area"
+                  value={detailsForm.area}
+                  onChange={(e) => setDetailsForm({ ...detailsForm, area: e.target.value })}
+                  style={{ height: 44, borderRadius: "10px", fontFamily: "inherit", fontSize: "0.9rem" }}
+                />
+              </div>
               <button
                 type="submit"
-                disabled={!detailsForm.name.trim() || !detailsForm.phone.trim()}
+                disabled={!detailsForm.name.trim() || !detailsForm.phone.trim() || !detailsForm.email.trim() || !detailsForm.area.trim()}
                 style={{
                   marginTop: "4px", width: "100%",
                   background: "linear-gradient(135deg, #ea2424, #c91f1f)",
@@ -364,7 +408,7 @@ export function ResultsView({ formData, capturedImage, onBack }: ResultsViewProp
                   cursor: "pointer",
                   boxShadow: "0 6px 20px rgba(234,36,36,0.3)",
                   display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
-                  opacity: (!detailsForm.name.trim() || !detailsForm.phone.trim()) ? 0.5 : 1,
+                  opacity: (!detailsForm.name.trim() || !detailsForm.phone.trim() || !detailsForm.email.trim() || !detailsForm.area.trim()) ? 0.5 : 1,
                   transition: "all 0.2s",
                   fontFamily: "inherit",
                 }}

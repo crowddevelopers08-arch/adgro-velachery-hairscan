@@ -48,9 +48,15 @@ function toShortJson(value: unknown) {
   }
 }
 
+function isValidEmail(email: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+}
+
 async function syncTelecrmLead(input: {
   name: string
   phone: string
+  email: string
+  area: string
   problem: string
   sourceUrl: string
 }): Promise<TelecrmResult> {
@@ -67,6 +73,8 @@ async function syncTelecrmLead(input: {
   const fields: Record<string, string> = {
     phone: input.phone,
     name: input.name,
+    email: input.email,
+    area: input.area,
     problem: input.problem,
     [formNameField]: FORM_NAME,
     [liveUrlField]: input.sourceUrl,
@@ -97,6 +105,8 @@ async function syncTelecrmLead(input: {
 async function saveLeadToDatabase(input: {
   name: string
   phone: string
+  email: string
+  area: string
   problem: string
   imageData: string
   sourceUrl: string
@@ -118,6 +128,8 @@ async function saveLeadToDatabase(input: {
       data: {
         name: input.name,
         phone: input.phone,
+        email: input.email,
+        area: input.area,
         problem: input.problem,
         imageData: input.imageData,
         sourceUrl: input.sourceUrl,
@@ -152,20 +164,29 @@ async function updateTelecrmStatus(scanId: number, telecrmResult: TelecrmResult)
 
 export async function POST(req: NextRequest) {
   try {
-    const { name, phone, problem, imageData, sourceUrl } = await req.json()
+    const { name, phone, email, area, location, problem, imageData, sourceUrl } = await req.json()
 
-    if (!name || !phone || !problem || !imageData) {
+    const normalizedPhone = String(phone ?? "").trim()
+    const normalizedName = String(name ?? "").trim()
+    const normalizedEmail = String(email ?? "").trim()
+    const normalizedArea = String(area ?? location ?? "").trim()
+    const normalizedProblem = String(problem ?? "").trim()
+
+    if (!normalizedName || !normalizedPhone || !normalizedEmail || !normalizedArea || !normalizedProblem || !imageData) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
     }
 
-    const normalizedPhone = String(phone).trim()
-    const normalizedName = String(name).trim()
-    const normalizedProblem = String(problem).trim()
+    if (!isValidEmail(normalizedEmail)) {
+      return NextResponse.json({ error: "Please enter a valid email" }, { status: 400 })
+    }
+
     const liveUrl = getLiveUrl(req, sourceUrl)
 
     const databaseResult = await saveLeadToDatabase({
       name: normalizedName,
       phone: normalizedPhone,
+      email: normalizedEmail,
+      area: normalizedArea,
       problem: normalizedProblem,
       imageData,
       sourceUrl: liveUrl,
@@ -181,6 +202,8 @@ export async function POST(req: NextRequest) {
     const telecrmResult = await syncTelecrmLead({
       name: normalizedName,
       phone: normalizedPhone,
+      email: normalizedEmail,
+      area: normalizedArea,
       problem: normalizedProblem,
       sourceUrl: liveUrl,
     }).catch((error) => ({

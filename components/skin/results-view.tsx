@@ -60,19 +60,29 @@ export function SkinResultsView({ formData, capturedImage, onBack }: SkinResults
   const router = useRouter()
   const [pdfFormOpen, setPdfFormOpen] = useState(false)
   const [pdfGenerating, setPdfGenerating] = useState(false)
-  const [pdfForm, setPdfForm] = useState({ name: formData.name || "", phone: formData.phone || "" })
+  const [pdfForm, setPdfForm] = useState({
+    name: formData.name || "",
+    phone: formData.phone || "",
+    email: formData.email || "",
+    area: formData.area || "",
+  })
 
   const problem = (formData.problem || "acne") as SkinProblemKey
   const data = resultsData[problem]
 
   const handleDownload = () => {
-    setPdfForm({ name: formData.name || "", phone: formData.phone || "" })
+    setPdfForm({
+      name: formData.name || "",
+      phone: formData.phone || "",
+      email: formData.email || "",
+      area: formData.area || "",
+    })
     setPdfFormOpen(true)
   }
 
   const handlePdfFormSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (!pdfForm.name.trim() || !pdfForm.phone.trim()) return
+    if (!pdfForm.name.trim() || !pdfForm.phone.trim() || !pdfForm.email.trim() || !pdfForm.area.trim()) return
 
     setPdfGenerating(true)
     try {
@@ -82,6 +92,8 @@ export function SkinResultsView({ formData, capturedImage, onBack }: SkinResults
         body: JSON.stringify({
           name: pdfForm.name,
           phone: pdfForm.phone,
+          email: pdfForm.email,
+          area: pdfForm.area,
           problem,
           imageData: capturedImage ?? "",
           sourceUrl: window.location.href,
@@ -101,6 +113,8 @@ export function SkinResultsView({ formData, capturedImage, onBack }: SkinResults
           problem,
           name: pdfForm.name.trim(),
           phone: pdfForm.phone.trim(),
+          email: pdfForm.email.trim(),
+          area: pdfForm.area.trim(),
           capturedImage,
         })
       )
@@ -221,13 +235,21 @@ export function SkinResultsView({ formData, capturedImage, onBack }: SkinResults
             <form onSubmit={handlePdfFormSubmit} className="mt-4 flex flex-col gap-5">
               <div className="flex flex-col gap-2">
                 <Label htmlFor="skin-pdf-name" className="text-foreground">Name</Label>
-                <Input id="skin-pdf-name" placeholder="Enter your name" value={pdfForm.name} onChange={(e) => setPdfForm({ ...pdfForm, name: e.target.value })} className="border-border/50 bg-background/50 focus:border-primary focus:ring-primary" />
+                <Input id="skin-pdf-name" required placeholder="Enter your name" value={pdfForm.name} onChange={(e) => setPdfForm({ ...pdfForm, name: e.target.value })} className="border-border/50 bg-background/50 focus:border-primary focus:ring-primary" />
               </div>
               <div className="flex flex-col gap-2">
                 <Label htmlFor="skin-pdf-phone" className="text-foreground">Phone Number</Label>
-                <Input id="skin-pdf-phone" type="tel" placeholder="Enter your phone number" value={pdfForm.phone} onChange={(e) => setPdfForm({ ...pdfForm, phone: e.target.value })} className="border-border/50 bg-background/50 focus:border-primary focus:ring-primary" />
+                <Input id="skin-pdf-phone" type="tel" required placeholder="Enter your phone number" value={pdfForm.phone} onChange={(e) => setPdfForm({ ...pdfForm, phone: e.target.value })} className="border-border/50 bg-background/50 focus:border-primary focus:ring-primary" />
               </div>
-              <Button type="submit" disabled={!pdfForm.name.trim() || !pdfForm.phone.trim()} className="mt-2 w-full bg-primary text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_20px_rgba(221,185,90,0.4)] disabled:opacity-50">
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="skin-pdf-email" className="text-foreground">Email</Label>
+                <Input id="skin-pdf-email" type="email" required placeholder="Enter your email" value={pdfForm.email} onChange={(e) => setPdfForm({ ...pdfForm, email: e.target.value })} className="border-border/50 bg-background/50 focus:border-primary focus:ring-primary" />
+              </div>
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="skin-pdf-area" className="text-foreground">Area</Label>
+                <Input id="skin-pdf-area" required placeholder="Enter your area" value={pdfForm.area} onChange={(e) => setPdfForm({ ...pdfForm, area: e.target.value })} className="border-border/50 bg-background/50 focus:border-primary focus:ring-primary" />
+              </div>
+              <Button type="submit" disabled={!pdfForm.name.trim() || !pdfForm.phone.trim() || !pdfForm.email.trim() || !pdfForm.area.trim()} className="mt-2 w-full bg-primary text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_20px_rgba(221,185,90,0.4)] disabled:opacity-50">
                 <Download className="mr-2 h-4 w-4" />
                 View Report
               </Button>

@@ -33,6 +33,8 @@ export function SkinHeroSection({ onStartScan }: SkinHeroSectionProps) {
     onStartScan({
       name: "",
       phone: "",
+      email: "",
+      area: "",
       problem,
     })
     setShowForm(false)

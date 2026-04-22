@@ -10,6 +10,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 export type FormData = {
   name: string
   phone: string
+  email: string
+  area: string
   problem: "hair-fall" | "crown-thinning" | "frontal-hair-loss" | "dandruff-scalp-issues" | "low-hair-density" | ""
 }
 
@@ -23,6 +25,8 @@ export function FormModal({ open, onOpenChange, onSubmit }: FormModalProps) {
   const [formData, setFormData] = useState<FormData>({
     name: "",
     phone: "",
+    email: "",
+    area: "",
     problem: "",
   })
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({})
@@ -40,6 +44,16 @@ export function FormModal({ open, onOpenChange, onSubmit }: FormModalProps) {
       newErrors.phone = "Please enter a valid phone number"
     }
 
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required"
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email"
+    }
+
+    if (!formData.area.trim()) {
+      newErrors.area = "Area is required"
+    }
+
     if (!formData.problem) {
       newErrors.problem = "Please select a problem"
     }
@@ -52,7 +66,7 @@ export function FormModal({ open, onOpenChange, onSubmit }: FormModalProps) {
     e.preventDefault()
     if (validate()) {
       onSubmit(formData)
-      setFormData({ name: "", phone: "", problem: "" })
+      setFormData({ name: "", phone: "", email: "", area: "", problem: "" })
       setErrors({})
     }
   }
@@ -75,6 +89,7 @@ export function FormModal({ open, onOpenChange, onSubmit }: FormModalProps) {
             </Label>
             <Input
               id="name"
+              required
               placeholder="Enter your name"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -90,12 +105,44 @@ export function FormModal({ open, onOpenChange, onSubmit }: FormModalProps) {
             <Input
               id="phone"
               type="tel"
+              required
               placeholder="Enter your phone number"
               value={formData.phone}
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
               className="border-border/50 bg-background/50 focus:border-primary focus:ring-primary"
             />
             {errors.phone && <p className="text-sm text-destructive">{errors.phone}</p>}
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="email" className="text-foreground">
+              Email
+            </Label>
+            <Input
+              id="email"
+              type="email"
+              required
+              placeholder="Enter your email"
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              className="border-border/50 bg-background/50 focus:border-primary focus:ring-primary"
+            />
+            {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="area" className="text-foreground">
+              Area
+            </Label>
+            <Input
+              id="area"
+              required
+              placeholder="Enter your area"
+              value={formData.area}
+              onChange={(e) => setFormData({ ...formData, area: e.target.value })}
+              className="border-border/50 bg-background/50 focus:border-primary focus:ring-primary"
+            />
+            {errors.area && <p className="text-sm text-destructive">{errors.area}</p>}
           </div>
 
           <div className="flex flex-col gap-2">
