@@ -11,6 +11,11 @@ type TelecrmResult = {
   response?: string
 }
 
+type DatabaseResult =
+  | { status: "saved"; id: number }
+  | { status: "duplicate"; response: string }
+  | { status: "failed"; response: string }
+
 function getLiveUrl(req: NextRequest, explicitUrl?: unknown) {
   if (typeof explicitUrl === "string" && explicitUrl.trim()) {
     return explicitUrl.trim()
@@ -91,6 +96,64 @@ async function syncTelecrmLead(input: {
   }
 }
 
+async function saveLeadToDatabase(input: {
+  name: string
+  phone: string
+  location: string
+  problem: string
+  imageData: string
+  sourceUrl: string
+}): Promise<DatabaseResult> {
+  try {
+    const existing = await prisma.scan.findFirst({
+      where: { phone: input.phone },
+      select: { id: true },
+    })
+
+    if (existing) {
+      return {
+        status: "duplicate",
+        response: "This mobile number has already been used to submit a lead.",
+      }
+    }
+
+    const scan = await prisma.scan.create({
+      data: {
+        name: input.name,
+        phone: input.phone,
+        location: input.location,
+        problem: input.problem,
+        imageData: input.imageData,
+        sourceUrl: input.sourceUrl,
+        formName: FORM_NAME,
+      },
+    })
+
+    return { status: "saved", id: scan.id }
+  } catch (error) {
+    return {
+      status: "failed",
+      response: error instanceof Error ? error.message : "Database save failed",
+    }
+  }
+}
+
+async function updateTelecrmStatus(scanId: number, telecrmResult: TelecrmResult) {
+  try {
+    await prisma.scan.update({
+      where: { id: scanId },
+      data: {
+        telecrmStatus: telecrmResult.status,
+        telecrmLeadIds: telecrmResult.leadIds ?? "",
+        telecrmResponse: telecrmResult.response ?? "",
+        telecrmSyncedAt: telecrmResult.status === "synced" ? new Date() : null,
+      },
+    })
+  } catch (error) {
+    console.error("Failed to update TeleCRM status on scan:", error)
+  }
+}
+
 export async function POST(req: NextRequest) {
   try {
     const { name, phone, location, problem, imageData, sourceUrl } = await req.json()
@@ -105,29 +168,21 @@ export async function POST(req: NextRequest) {
     const normalizedProblem = String(problem).trim()
     const liveUrl = getLiveUrl(req, sourceUrl)
 
-    const existing = await prisma.scan.findFirst({
-      where: { phone: normalizedPhone },
-      select: { id: true },
+    const databaseResult = await saveLeadToDatabase({
+      name: normalizedName,
+      phone: normalizedPhone,
+      location: normalizedLocation,
+      problem: normalizedProblem,
+      imageData,
+      sourceUrl: liveUrl,
     })
 
-    if (existing) {
+    if (databaseResult.status === "duplicate") {
       return NextResponse.json(
-        { error: "This mobile number has already been used to submit a lead." },
+        { error: databaseResult.response },
         { status: 409 },
       )
     }
-
-    const scan = await prisma.scan.create({
-      data: {
-        name: normalizedName,
-        phone: normalizedPhone,
-        location: normalizedLocation,
-        problem: normalizedProblem,
-        imageData,
-        sourceUrl: liveUrl,
-        formName: FORM_NAME,
-      },
-    })
 
     const telecrmResult = await syncTelecrmLead({
       name: normalizedName,
@@ -140,17 +195,33 @@ export async function POST(req: NextRequest) {
       response: error instanceof Error ? error.message : "TeleCRM sync failed",
     }))
 
-    await prisma.scan.update({
-      where: { id: scan.id },
-      data: {
-        telecrmStatus: telecrmResult.status,
-        telecrmLeadIds: telecrmResult.leadIds ?? "",
-        telecrmResponse: telecrmResult.response ?? "",
-        telecrmSyncedAt: telecrmResult.status === "synced" ? new Date() : null,
-      },
-    })
+    if (databaseResult.status === "saved") {
+      await updateTelecrmStatus(databaseResult.id, telecrmResult)
+    }
 
-    return NextResponse.json({ success: true, id: scan.id, telecrmStatus: telecrmResult.status })
+    const databaseSaved = databaseResult.status === "saved"
+    const telecrmAccepted = telecrmResult.status === "synced"
+    const telecrmUnavailable = telecrmResult.status === "failed" || telecrmResult.status === "skipped"
+
+    if (!databaseSaved && telecrmUnavailable) {
+      return NextResponse.json(
+        {
+          error: "Failed to submit lead to database and TeleCRM.",
+          databaseStatus: databaseResult.status,
+          databaseResponse: databaseResult.response,
+          telecrmStatus: telecrmResult.status,
+          telecrmResponse: telecrmResult.response,
+        },
+        { status: 500 },
+      )
+    }
+
+    return NextResponse.json({
+      success: true,
+      id: databaseResult.status === "saved" ? databaseResult.id : null,
+      databaseStatus: databaseResult.status,
+      telecrmStatus: telecrmResult.status,
+    })
   } catch (error) {
     console.error("Failed to save scan:", error)
     const message =
