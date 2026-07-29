@@ -219,7 +219,7 @@ export default async function DashboardPage({
             <h1 className="text-3xl font-bold text-foreground">Scan Dashboard</h1>
             <p className="mt-1 text-muted-foreground">
               {filteredScans.length} filtered {filteredScans.length === 1 ? "record" : "records"}
-              {" "}from {scans.length} total
+              {" "}froms {scans.length} total
             </p>
           </div>
           <a
